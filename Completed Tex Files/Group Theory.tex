@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Group Theory} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+
+\begin{definition}[Group]
+A group is a two-tuple $(G,*)$ where $G$ is a set and $*$ is a binary operation. Also $G$ must be closed under $GxG\rightarrow G$
+	\begin{enumerate}
+		\item Accociativity: $\forall a,b,c \in G, a(bc) = (ab)c=a*(b*c)=(a*b)*c$
+		\item Identity: $\exists e \in G$ s.t. $ea=ae=a$ $\forall a \in G$
+		\item Inverses: $\forall e \in G$, $\exists a^{-1}$ s.t. $aa_{-1}= a^{-1}a =e$
+	\end{enumerate}
+\end{definition} 
+
+\begin{definition}[Order of an Element]
+The order of an element for any $a \in G$, $|a| = min\{n\in \mathbb{Z}^+: a^n=e\}$
+\end{definition}
+
+\begin{definition}[Order of a Group]
+$|G|$ for $(G,*)$, a group, the cardinality of the set $G$.
+\end{definition}
+
+\begin{definition}[Subset]
+Let $G$ be a group. The set $M$ is a subgroup of $G$ of $G$ if $M\subset G$ and $H$ is a subgroup in it's own right under the same operation denoted $H \leq G$.
+\end{definition}
+
+\section{Proofs}
+
+\begin{theorem}
+Let (G,*) be a group. Then:
+	\begin{enumerate}
+		\item The identity, e, is unique
+		\item Inverses are unique
+		\item $(a^-{1})^{-1}= a$ $\forall a \in G$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item By def of $G$ being a group, the identity exists. BWOC, let $e,f \in G$, both the identity. Thus, $ef=f$ and $fe=e$ by def of identity. Hence, we also know $ef=fe$ so $f=ef=fe=e$. Thus the identity is unique.
+		\item By definition of $G$, $\forall a \in G$, $\exists a^{-1}$ BWOC, let $a_1^{-1}, a_1^{-2} \in G$ are both inverses for $a$. Then, $aa_1^{-1}=e$ and $aa_2^{-1}$. So, $a_1^{-1}=a_1^{-1}e=a_1^{-1}(aa_2^{-1})=(a_1^{-1}a)a_2^{-1}ea_2^-1=a_2^{-1}$.
+		\item Let a$\in G$. By definition of G, $\exists a^-1$ s.t. $aa^{-1}=e$ and $\exists(a^{-1})^{-1}$ s.t. $a^{-1}(a^{-1})^{-1}=e$.
+	\end{enumerate}
+\end{proof}
+
+\end{document}

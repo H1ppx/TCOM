@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Finite State Machines} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+
+\begin{definition}[Finite State Machine]
+A finite state machine is a 5-state(), where:
+	\begin{enumerate}
+		\item Q is our set of states
+		\item $\Sigma$ is our input alphabet
+		\item $\delta$ is the transition function
+		\item $q_0$, the initial start state
+		\item $F \in Q$ the set of final accept states
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Deterministic Finite State Automoton]
+We say that a finite state mahine is a DFA(Determanistic finite state automoton) if the transition functionis of the form: $$\delta: Q \times \Sigma \rightarrow Q$$
+\end{definition}
+
+\begin{definition}[Non-deterministic Finite State Automoton]
+A finite state machine is a NFA(Non-deterministic Finite State Automoton) if the transition function is of the form: $$\delta: Q\times \Sigma \rightarrow 2^Q$$
+\end{definition}
+
+\begin{definition}[$\epsilon$-NFA]
+A finite state machine is an $\epsilon$-NFA if the transition is of the form: $$\delta: Q \times (\Sigma \cup \{\epsilon\}) \rightarrow 2^Q$$
+\end{definition}
+
+\begin{definition}[Complete Computation]
+Let $M$ be a FSM, and let $w \in \Sigma^*$. A complete computation of $M$ on $w$ is a sequence: $s_0, s_1,...,s_k$ (where $k=|w|$), with $s_1\in \delta(s_{i-1},w_i)$, $\forall i\in [k]$, We can say that the computation is accepting if $s_k \in F$ (i.e. if $M$ holds on a final state when run on $w$).
+\end{definition}
+
+\begin{definition}
+Let $M$ be a FSM. The language of $M$ is the set:
+	\begin{itemize}
+		\item $L(M)=\{w\in \Sigma^*| $there exists a complete accepting computation for $w\}$
+		\item $M(w)=1$, if $M$ accepts $w$
+		\item $M(w)=0$, if $M$ rejects $w$
+	\end{itemize}
+\end{definition}
+
+\begin{definition}
+Let $N$ be an $\epsilon$-NFA, and let q$ \in Q$. The  E-closure of $q$, denoted ECLOSE($q$), is defined recursively: 
+	\begin{enumerate}
+		\item $q \in$  ECLOSE($q$)
+		\item If $v \in$ ECLOSE($q$) and  $r \in \delta(v,\epsilon)$, then $r\in$ ECLOSE($q$)
+	\end{enumerate}
+
+\end{definition}
+
+\section{Proofs}
+
+\begin{theorem}[Kleene Theorem]
+A language $L$ is regular if and only if there exists a DFA $M$ that accepts L(i.e. $L(M)=L$)
+\end{theorem}
+\begin{proof}
+$\Rightarrow$) We prove by induction on $n=|L|$ that if $L$ is regular, then $L$ is accepted by some DFA. Base Case: 
+	\begin{enumerate}
+		\item Suppose $n=0$. Then $L=\emptyset$. The DFA $q_0$ accepts $L$.
+		\item Suppose $n=1$.	 the DFA $q_0$ accepts $\{\epsilon\}$
+			\item If $L=\{a\}$, for $a \in \epsilon$ then $q_0 \rightarrow \epsilon_1$, accepts $L$ 
+		\end{enumerate}
+	\end{enumerate}
+Inductive Hypothesis: Fix $k \geq 1$, and suppose that every regular language of size $|L| \leq k$ is accepted by some DFA. Inductive Step: Let $L_1, L_2$ be regular languages of size at most $k$. By the Inductive Hypothesis, we have DFAs $M_1$, $M_2$ s.t. $L(M_1)=L_1$ and $L(M_2)=L_2$.
+
+\end{proof}
+
+\begin{lemma}
+There exists a DFA $M$ to accept $L_1 \cup L_2$
+\end{lemma}
+\begin{proof}
+Let $M$ be a DFA with:
+	\begin{enumerate}
+		\item $Q_M=Q_1 \times Q_2$
+		\item $\Sigma_K = \Sigma_1 \cup \Sigma_2$
+		\item $q_0(M)=(q_0(1),q_0(2))$
+		\item $(F_1 \times Q_2)\cup (Q_1 \times F_2)$
+		\item $\delta_M = \delta_1 \times \delta_2$ (i.e. $S_M((q_i,q_j),a)=S_1(q_i,a),S_2(q_j,a)$)
+	\end{enumerate} 
+We show that $L_1 \cup L_2 = L_M$. Let $\omega \in L_1\cup L_2$. Thus, $\omega \in L_1$ for some $i\in [2]$. Let $\hat{\delta}_i=(s_0,s_1,...,s_k)$ be an accepting computation of $M_i$ on $\omega$. Let $\hat{\delta}_j=(r_0,r_1,...,r_k)$ be a computation of $M_j$ on $\omega$. We have that $((s_0,r_0),(s_1,r_1),...,(s_k,r_k))$ is an accepting computation of $M$ on $\omega$. Thus $\omega \in L(M)$. So $L_1\cup L_2 \subset L(M)$. We now show $L(M)\subset L_1\cup L_2$. Let $\omega \in L(M)$. Let $\hat{\delta}_M =((a_0,b_0),(a_1,b_1),...,(a_k,b_k))$ be the accepting computation of $M$ on $\omega$ As $\omega \in L(M)$, $(a_k,b_k)\in(F_1\times Q_2)$ or $(a_k,b_k)\in (Q_1\times F_2)$. Without the laws of generality, suppose $(a_k,b_k)\in(F_1\times Q_2)$. So $(a_0,a_1,...,a_k)$ is accepting computation of $M_1 on \omega$. So $\omega_1\in L_1$. By similar argument, if instead $(a_k,b_k)\in Q_1 \times F_2$,then $\omega \in L_2$. So $\omega \in L_1\cup L_2$.
+\end{proof}
+
+\begin{lemma}
+$L_1\cdot L_2$ is accepted by an $\epsilon$-NFA $M$
+\end{lemma}
+
+\begin{lemma}
+$L_1^*$ is regular
+\end{lemma}
+
+\end{document}

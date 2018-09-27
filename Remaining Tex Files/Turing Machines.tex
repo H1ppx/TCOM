@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Turing Machine} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+
+\begin{definition}[Deterministic Turing Machine]
+A deterministic turing machine is a 7-tuple: (Q, $\Sigma$, $\Gamma$, $\delta$, $q_0$, $q_{accept}$, $q_{reject}$) where:
+	\begin{enumerate}
+		\item Q is the finite set of states
+		\item $\Sigma$ is the input alphabet
+		\item $\Gamma$ is the tape alphabet, where $\Sigma \subset \Gamma$ and the black symbol $\beta \in \Gamma$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Recusively Enumerable]
+A language $L$ is recusively enumerable if there exists a turing machine $M$ s.t. $L(M)=L$
+\end{defintion}
+
+\begin{definition} ;
+A language $L$ is decidable if $L$ is recusively enumerable and $M$ halts on all such strings.
+
+\end{document}

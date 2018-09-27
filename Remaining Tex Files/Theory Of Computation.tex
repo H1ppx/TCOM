@@ -1,0 +1,433 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\theoremstyle{definition}
+\newtheorem{define}{Definition}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Theory of Computation} 
+\author{William Chu} 
+\maketitle 
+
+\section{Set Equality}
+
+\begin{define}
+Let $A,B$ be sets such that $A=B$. To show $A=B$, we need to show two statements.
+	\begin{itemize}
+		\item $A\subset B$
+		\item $B\subset A$
+	\end{itemize}
+\end{define}
+
+\begin{define}
+Let $p,q \in \mathbb{z}$. We say that $p$ divides $q$ (denote $p|q$) if $\exists k \in \mathbb{z}$ so that $pk=q$. 
+\end{define}
+
+\begin{prop}
+Let $A = {6n: n\in \mathbb{z}}$, $B={2n: n\in \mathbb{z}}$, $C={3n: n\in \mathbb{z}}$. So $A= B\cap C$.
+\end{prop}
+\begin{proof}
+We first show that $A \subset B\cap C$. Let $x \in A$. By definition of $A$, $x =6k$ for some$ k \in \mathbb{z}$. We show $x \in B$ and $x \in C$. We first observe $x = 2\cdot(3k)$. Therefore, $x \in B$. Now ovserve$ x = 3\cdot(2k)$. So $x \in C$. Thus $x \in B\cap C$. As x was arbitrairy, we conclude that $A \in B\cap C$. We now show that $(B\cap C)\subset A$. Let $y \in B\cap C$. Let $n_1, n_2 \in \mathbb{z}$ such that $y=2n_2 = 3n_2$. As 2 and 3 share no common factors, we have that $2\cdot 3|y$. so $6|y$. Thus $y = 6h$ for some $h \in \mathbb{z}$. So $y \in A$. Thus , $(B\cap C) \subset A$. We showed that $A \subset (B\cap C)$ and $(B\cap C)\subset A$. So $A= B\cap C$.
+\end{proof}
+
+\begin{prop}
+Let $A, B, C$ be sets, Then $A\times (B\cup C) = (A\times B)\cup (A\times C)$. 
+\end{prop}
+\begin{proof}
+We first show $A\times (B\cup C) \subset (A\times B) \cup (A\times C)$. Let $(x,y) \in A \times (B\cup C)$. We show that $(x,y)\in (A\times B)\cup (A\times C)$.  We have two cases:
+	\begin{enumerate}
+		\item Suppose $y\in B$. Then $(x,y)\in A\times B$.
+		\item Suppose $y\in C$. Then $(x,y)\in A\times C$
+	\end{enumerate}
+So $(x,y) \in (A\times B)$ or $(x,y)\in A\times C$. Thus, $(x,y)\in (A\times B) \cup (A\times C)$. And We conclude $A\times (B\cup C)\subset (A\times B)\cup (A\times C)$. We now show $(A\times B)\cup (A\times C) \subset A \times(B\cup C)$. Let $(x,y)\in (A \times B)\cup (A\times C)$. To be continued
+\end{proof}
+
+\section{Autonoma Theory}
+
+\begin{define}[Alphabet] 
+Let $\Sigma$ be a finite set, We refer to $\Sigma$ as an alphabet.
+\end{define}
+
+\begin{define}[Kleene Closure] 
+Let $\Sigma$ be an alphabet. The kleene closure of $\Sigma$, denoted $\Sigma^*$ is the set: $$\Sigma^* = \bigcup_{n\in \mathbb{N}}\sum^n$$ where $\Sigma^0=\{\Sigma\}$. Note: $\Sigma$ is the empty string.
+\end{define}
+
+\begin{define}[Language]
+A language $L \subset \Sigma^*$
+\end{define}
+
+\begin{define}[Regular Language]
+Let $\Sigma$ be an alphabet. The following are perciesly the regular languages over $\Sigma$. (i) $\emptyset$ is regular. (ii) $\{a\}$ is regular, $\forall a\in \Sigma$. (iii) If $L_1, L_2$ are regular the $L_1 \cup L_2$, $L_1^*$ is regular and $L_1 \cdot L_2 = \{xy|x \in L_1, y\in L_2\}$ is regular.
+\end{define}
+
+\begin{define}
+Let $\Sigma$ be an alphabet. A regular expression defined recusively 
+	\begin{enumerate}
+		\item $\emptyset$ is a regular expressiion with $L(\emptyset) = \emptyset$.
+		\item $\epsilon$ is a regular with $L(\epsilon) = \{\epsilon\}$.
+		\item For each $a\in \Sigma$, the regular expression a has language $\{a\}$. ($L(a) = {a}$)
+		\item For $R_1, R_2$ be regular expressions. Then:
+    			\begin{enumerate}
+				\item $R_1+R_2$ is a regular expression, where $L(R_1+R_2)=L(R_1)\cup\ L(R_2)$. 
+     				\item $R_1R_2$ is a regular expression, where $L(R_1R_2) = L(R_1)L(R_2)$.
+      				\item $R_1^*$ is regular, and $L(R_1^*) = (L(R_1))^*$.
+    			\end{enumerate}
+	\end{enumerate}
+\end{define}
+
+
+\section{Graph Theory}
+
+\begin{define}[Simple Graph]
+A simple graph $G(V,E)$ has a vertex set V (denote  V(G) if the graph is not clear), and an edge set $E\subset {{V}\choose{2}}$. [$E\subset {{V}\choose{2}}$ is the set of 2-element subsets of V] Remark, for an edge ${i,h}$ we write it as $ij$ or $ji$.]
+\end{define}
+
+\begin{define}[Compelete Graph]
+Let $n\in \mathbb{N}$. The complete graph on $n$ verticies, denoted as $k_n$, has vertex set $V=[n]$, and edge set $E={[n]}\choose{2}$.
+\end{define}
+
+\begin{define}[Path]
+The path on $n$ verticies, denoted $P_n$, has certe set V=[n], and edge set; $E = \{\{i, i+1\}| i \in [n-1]\}$.
+\end{define}
+
+\begin{define}[Null Graph]
+$G(V,E)$ has $V=E=\emptyset$, $G=\emptyset$.
+\end{define}
+
+\begin{define}[Empty Graph]
+The empty graph on $n$ verticies $G(V E)$ has vertex set $V=[n]$, and $E= \emptyset$.
+\end{define}
+
+\begin{define}[Cycle Graph]
+For $ n \in \mathbb{N}$, $n \geq 3$, the cycle graph on verticies, denoted as $C_n$, has vertex $E={{i, i+1}|i\in [n-1]}$.
+\end{define}
+
+\begin{define}[Wheel Graph]
+Let $n\geq 4$. The wheel graph on $n$ vertices, denoted as $W_n$ is the graph $G(V, E)$, with vertex set $V=[n]$ and edge set. $$E=\{\{i, i+1\}|i\in[n-2]\}\cup\{\{1, n-1\}\}\cup \{\{i,n\}| i\in [n-1]\}$$.
+\end{define}
+
+\begin{define}[Bipartite graph]
+A barpartite graph $G(V,E)$ is a graph s.t. $V$ can be partitoned into two sets $X, Y$ (i.e., $V=XUY$, $X\cap Y= \emptyset$ and $E\subset \{xy|x\in X, y \in  Y\})$
+\end{define}
+
+\begin{define}[Hypercube] 
+The hypercube of degree $d$, denoted $Q_d$, has vertex set $V = {0,1}^d$ (i.e., the set of binary strings of length $d$). Now $(w_1, w_2, ..., w_d)$ and $(\tau_1, \tau_2,...\tau_d)$ are adjacent in $Q_d$ if and only if there exists exactly one $i \in [d]$ s.t. $w_i \neq \tau_i$.
+\end{define}
+
+\begin{define}[Connected]
+A graph is said to be connected if for every pair of vertices $u,v$ there exists a path from $u$ to $v$ (i.e., $u-v$ path). A graph is disconnected if it is not connected. The connected subgraphs are called componenets.
+\end{define}
+
+\begin{define}[Tree]
+A tree is a connected, a cyclic graph.
+\end{define}
+
+\begin{define}[Vertex Degree]
+Let $G(V, E)$ be a graph. The degree of a vertex $v \in V$ is $deg(v)= |\{uv|uv\in E\}|$. A graph is $d$-regular if every vertex has degree $d$.
+\end{define}
+
+\begin{define}[Walk]
+Let $G(V,E)$ be a graph. A walk in G is a sequence of verticies. ($v_0, v_1,...,v_k$) s.t. for all $i \in \{0,...,k-1\}$, $v_iv_{i+1} \in E(G)$.
+\end{define}
+
+\begin{define}[Adjacency Matrix]
+Let $G(V,E)$ be a graph. The adjacency matrix of $G$ is a $|V| \times |V|$ matrix where $A_{ij}$=$\{1:ij\in E(G), 0:$ Otherwise$\}$
+\end{define}
+
+\begin{define}[Closed Walk]
+Let $G(V, E)$ and let $v_0, v_1,...v_k$ be a walk. We say that the walk is closed if $v_0 = v_k$.
+\end{define}
+
+\begin{define}[Independent Set]
+An independent set of a graph $G(V,E)$ is a set $S \subset V$ such that for every $i,j \in S$, $ij \notin E(G)$. Denote $\alpha(G)$ as the size of the largest independent set in $G$.
+\end{define}
+
+\begin{define}[Graph Vertex Coloring] 
+A vertex coloring of a graph $G(V, E)$ is a function $\varphi : V(G) \rightarrow [n]$ s.t. whenever $uv\in E(G), \varphi(u) \neq \varphi(v)$. The chromatic number of $G$ denoted $\chi(G)$, is the smallest $n \in \mathbb{N}$ s.t. there exists a coloring $$\varphi:V(G)\rightarrow [n]$$. 
+\end{define}
+
+\begin{lem}[Handshake Lemma]
+Let $G(V, E)$ be a simple graph. Then $$\sum_{v\in V}deg(v) = 2|E|$$.
+\end{lem}
+\begin{proof} 
+By double counting. $2|E|$ counts twice the number of edges. $$\sum_{v\in V}deg(v)$$we note that $deg(v)$ counts the number of edges incident to $v$. Each edge has 2 endpoints, $u$ and $v$. So $uv$ is counted twice once in $deg(v)$ and once in deg(u). So  $$\sum_{v\in V}deg(v) = 2|E|$$
+\end{proof}
+
+\begin{lem}
+Let $G(V, E)$ be a graph. Every closed walk of odd length at least 3, contains an odd cycle.
+\end{lem}
+\begin{define}[Proof}By induction on odd $k\in \mathbb{Z}^+$, $k \geq 3$. Base Case: Any closed walk of length 3 includes an odd cycle so the lemma holds. Inductive Hypothesis: Fix $k\in \mathbb{Z}^+$ odd, $k\geq 3$., and suppose the lemma holds. Inductive Step: Conside a closed walk of length $k+2$, $v_0,v_1,...,v_k+2$. If $v_0 = v_{k+2}$ are the only repeated verticies then the walk unduces an odd cycle, and we are done. Suppose instead there are only other repeated verticies in the walk. Let $0 \leq i < j \leq k+2$, where we don't have both $i=0$ and $j=k+2$. Suppose $v_i = v_j$, then $v_i,v_{i+1},...,v_k$ has odd length, then $v_i,...,v_j$ contains an odd cycle by the inductive hypothesis. Suppose instead $v_i,...,v_j$ has even length. Observe that $v_0,...,v_i,v_{j+1},...,v_k+2$ is a closed walk of odd length at most $k$. So by the Inductive Hypothesis, $v_0,...,v_i,v_j+1,...,v_{k+2}$ has an odd cycle. Thus $v_0,...,v_{k+2}$(The Original Walk) has an odd cycle. Q.E.D
+
+\section{Theorm 1}
+\begin{define}[Proposition} Let $G(V,E)$ be a graph, and let $A$ be its adjcency matrix. For all $n \in \mathbb{Z}^+$, $(A^n)ij$ counts the number of $i-j$ walks of length $n$.
+\begin{define}[Proof} By induction on $n \in \mathbb{Z}^+$. Base case: n=1. So $A^1 = A$. Now there exists a walk of length 1 from $i-j$ if and only if $ij \in ij \in E(G)$. This is counted by $A^{ij}$. Inductive Hypothesis: Fix $k \geq 1$, and supposse that $(A^k)ij$ counts the number of $i-j$ walks of length $k$. Inductive Step: Consider $A^{k+1}= A^K\times A$. By the Inductive Hypothesis, $(A^k)ij$ counts the number of $i-j$ walks of length $k$. Similarly Aij counts the number of $i-j$ walks of length $k$. Observe that: $$(A^{K+1})ij = \sum_{x=1}^{n= |V|}((A^k)_{ix}\times Axj)$$ Now $(A^k)ix$ counts the number of $k$-length walks from $i-x$. Now $Axj=1$ if and only if $xj\in E(G)$. So we may extend a walk of length $k$ from $i-x$, to walk of length $k+1$ from $i-j$ if and only if $xj \in E(G)$. By the rule of sum, we add up over all the $x \in V(G)$. Q.E.D.
+ 
+\section{Theorm 2}
+\begin{define}[Proposition}A graph $G(V, E)$ is bipartite if and only if $G$ contains no cycles of odd length.
+\begin{define}[Proof}Suppose $G$ is bipartite with parts from $X$ and $Y$. $$V(G)=X\cup Y, X\cap Y=0$$ Consider a walk of length$n$. As no two vertices in a fixed part are adjacent, only walks of even length can be closed. A cycle is a closed walk where only the endpoints are repeated. So $G$ contains no odd cycles. Conversely, suppose $G$ has no odd cycles. We construct a bipartition of $G$. Without laws of generality, suppose $G$ is connected. For if G is not connected we apply the following construction to each connected component. Fix $v \in V(G)$. Let: $X = \{x\in v(G)|dist(v,x)$ is even\}, $Y = \{y \in V(G)|dist(v,y)$ is odd\}. So $V(G)=X \cup Y$, and $X \cap Y= \emptyset$. We show that as two verticies in the same part are adjacent. Suppose to the contrary that there exists a closed odd walk $(v_1,...y_1,y_2,...v)$ By Lemma 1, $(v _1,...,y_1,y_2,...v)$ contains an odd cycle, contradicting the assumption that $G$ has no odd cycles .Similarly, no two vertices in $X$ are adjacent. So $G$ is bipartite. Q.E.D.
+
+\section{Theorm 3}
+\begin{define}[Proposition} $2^\mathbb{N}$ is uncountable.
+\begin{define}[Proof} Suppose to the contrary that $2^\mathbb{N}$ is countable. Let $h: \mathbb{N} \rightarrow 2^\mathbb{N}$ be a bijection. We obtain a contradiction (contradicting the surjectivity of $h$). We construct a set: $S \in 2^\mathbb{N}$ s.t. $\forall n\in \mathbb{N}$, $h(n)+S$. Def: $S=\{i \in \mathbb{N} | i \notin h(i)\}$. We show that $S$ is not in the range of $h$. Suppose $i \in h(i)$. Then $i\notin S$ Thus, $h(i)\neq S$. Similarly, if $i \notin h(i)$, then $i\in S$. So $h(i)\neq S$. Thus, $S$ ins not in the range of $h$, contridicting the assumption that $h$ was a bijection. Q.E.D.
+
+\section{Corralary to Theorm 3}
+\begin{define}[Proposition}$\mathbb{R}$ is uncountable.
+\begin{define}[Proof} We show $[0,1]$ is uncountable. We represent $S\in 2^\mathbb{N}$ as a binary string $w$, where $w_i = \{1: i\in S, 0: i \notin S\}$ we map $w\mapsto 0$. w, which is an injection. So $[0,1]$ is uncountable. Q.E.D.
+
+\section{Asymptotics}
+
+\begin{define}
+Let $$f,g: N \rightarrow L=\lim _{x\to \infty }\left(\frac{f\left(n\right)}{g\left(n\right)}\right)$$
+We have: (i) If $0 \leq L< \:\infty$, then $f(n)\in O(g(n))$ (ii) $0 < L \leq \:\infty$, then $f(n)\in\Omega(g(n))$ (iii) If $0<L< \:\infty$, then $f(n)\in\Theta(g(n))$
+\end{define}
+
+\begin{define}
+Let $f \circ g: \mathbb{N} \rightarrow \mathbb{N}$. We say that $ f(n) \in \mathcal{O}(g(n)) [f(n) = \mathcal{O}(g(n))]$ if $\exists c,k\in \mathbb{Z}^{+}$ such that $f(n) \leq c\circ g(n) \forall n \geq k$
+\end{define}
+
+\begin{thm}
+$f(n)=n$, $g(n) =n^2$. Then $f(n)\in O(g(n))$.
+\end{thm}
+\begin{proof}
+Let c = k = 1. We show by induction on $n \in N$ that $n \leq n^2$. Inductive Hypothesis: Fix $k \leq 0$. Suppose $k \leq k^2$.
+Inductive Step: Consider k+1. By the Inductive Hypothesis, $k \leq k^2$. So $k+1 \leq k^2+1 > k^2 +2k+1 = (k+1)^2$ So we have by induction that $n \leq n^2$ for all $n \in N$ Thus, $n \in O(n^2)$.
+\end{proof}
+
+
+\section{Combinatorics}
+
+\begin{define}[Rule of Sum]
+If $A$ and $B$ are disjoint sets, then $|A \cup B| = |A| +|B|$.
+\end{define}
+
+\begin{define}[Rule of Product]
+If $A$ and $B$ are sets, then $|A\ B|=|A| \cdot |B|$
+\end{define}
+
+\begin{define}[Permutation]
+Let $X$ be a set. A permutation is a bijection $f: x \rightarrow x$.
+\end{define}
+
+\begin{define}[Restricted Permutation]
+Given an $n$-element set and $r \in {0,...,n}$, there are $P(n,r)= \frac{n!}{n!(n-r)!}$
+\end{define}
+
+\begin{define}[$\Sigma$ alphabet]
+Let $\Sigma$ be a finite string we refer to as an alphabet. A word of length $n$ is an element of $\Sigma ^n$
+\end{define}
+
+\begin{define}[Countabliity]
+A set $X$ is said to be countable if there exists an injection $f: X \rightarrow \mathbb{N}$. That is, $X$ is countable if and only if $|X| \leq |\mathbb{N}|$.
+\end{define}
+
+\begin{define}[Multiset]
+A multiset $S$ is an unordered collection of elements, which may be distinct.
+\end{define}
+
+\begin{define}[Intuition]
+A multiset is a set, with possible repeated elemtents.
+\end{define}
+
+\begin{define}[Binomial Theorm]
+For $x,y \in \mathbb{C}$, $$(x+y)^n = {\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1}$$
+\end{define}
+
+\begin{thm}
+There exists $n!$ permutations on $[n]$.
+\end{thm}
+\begin{proof}We define a permutation $\pi: [n] \rightarrow [n]$. Observe that $\pi(1)$ can take on any value [n]. So we have $n$ choices for $\pi(1)$. This leaves $n-1$ possible values to which $\pi(2)$ can map. The selections of $\pi(1) and \pi(2)$ are independent. So by the rule of product, we multiply to obtain $n(n-1)$ ways of selecting $\pi (1)$ and $\pi(2)$. Proceeding in this manner, there are $n(n-1)(n-2)...2 \cdot 1 = n!$ permutations.
+\end{proof}
+
+\begin{thm}
+$$\sum_{i=0}^{n} 2^{i} = 3^n$$
+\end{thm}
+\begin{proof}
+By double countiing, $3n^2$ counts the number of ternary strings of length $n$. Fix $i \in[n]\cup{0}$. We first count the number of ternary string of length $n$ with exactly $i$ binary digits. We select the positions for the binary digits in ${n}\choose{i}$ ways. There are $2^i$ ways of populating the selected $i$ positions with binary digits. Our selection of binary digits fixes the rest of the positions to contain $2$'s Denote $A$, as the set of ternary strings length $n$ with exactly $i$ binary digits. For $ \neq j, A_i \cap A_j = \emptyset$. So by rule of sum, we add $$\sum_{i=0}^{n} 2^{i}$$ This counts all the ternary strings of length $n$.
+\end{proof}
+
+\begin{thm}[Rule of Sum]
+Let $A$ and $B$ be disjoint sets, then $|A \cup B|=|A|+|B|$.
+\end{thm}
+\begin{proof}
+Let $n=|A|+|B|$. We map $F: A \cup B \rightarrow [n]$. Let $g: A \rightarrow [|A|]$, $h:B \rightarrow [|B|]$ be bijections. Define: $f(x)={g(x): x \in A, h(x)+|A|:x\in B}$. As $A \cap B=0$, x will be evaluated under $g$ or under $k$, but not both, As $g$ and $h$ are functions so is $f$. We verify that $f$ is a bijection. Injection: Let $x_1$,$x_2$, $\in X\cup Y$ s.t. $f(x_1)=f(x_2)$. Observe that f takes on values from ${1,...|A|}$ if $x \in A$, and f takes on values from ${|A|+1,...,|A|+|B|}$ if $x \in Y$. if $x \in B$. Since f($x_1$)=f($x_2$), we have that $x_1$,$X_2 \in A$ or $x_1$,$x^2 \in B$. If $x_1$, $x_2 \in B$. If $x_1, x_2, \in A$, then $f(x_1)=g(x_1)=f(x_2)$. As g is a bijection, it follows that $x_1=x_2$ Similarly, if $x_1$, $x_2 \in B$, then we have: $f(x_1)=h(x_1)=h(x_2)$. As h is a bijection, $x_1= x_2$ So f is an injection. Surjection: As $g$ is a surjection, $\forall n \in [|A|], \exists x \in A$ s.t. $g(x)=n$. Therefore $[|A|]\subset range(f)$. As $h$ is a surjection, $f$ maps to each $y \in {|A|+1,...,|A|+|B|}$ So F is surjective.
+\end{proof}
+
+\begin{thm}[Stars and Bars]
+Let $n,k\in \mathbb{N}$. There exists percisely ${n+k-1 \choose n}$ multisets of size n, whose elements are drawn from [k].
+\end{thm}
+\begin{proof}
+Let M be the set of n-element multisets drawn from [k]. We construct a bijection $\varphi:(*^n,i^k-1) \rightarrow M$, as follows $\varphi (*^a1|...|*^ak) = {1,...,1,2,...,2,...,k,...,k}$. We show that $\varphi$ is a bijection. 
+Surjection: Let $S = {1,...,1,...,k,...k^ak} \in M$. Then $*^a1|*a2|...|*^ak| \rightarrow$ S under $\varphi$ So $\varphi$ is surjective. Injection: Let $\omega, \tau \in R(*^n,|^k-1)$ such that $\varphi(\omega) =  \varphi(\tau)= {1^a,2^{a_{1}},...,k^{a_{k}}}$. It follows that $\omega = \tau = *^{a_{1}}|*^{a_{2}}|*^{a_{3}}$. So $\varphi$ is injective, and thus a bijection.
+\end{proof}
+
+\begin{thm}[Bionomial Theorem]
+For $x,y \in \mathbb{C}$, $$(x+y)^n = {\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1}$$
+\end{thm}
+\begin{proof}
+We observe that on $${\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1}$$ There are ${n}\choose{i}$
+terms of the form $x^{i}y^{n-1} \forall i \in [n]\cup {0}$. Now expanding $(x+y)^n$, each term is of the form $x^{i}y^{n-1}$ for $i \in [n]\cup {0}$. Each factor $(x+y)$ contributes either $x$ or $y$, but not both to $x^{i}y{n-1}$. As multiplication continues the order in which the $x$'s and $y$'s are selected does not matter. There are ${n}\choose{i}$ ways of selecting the $x$ terms, which fixes the selection of the y terms. The selections of terms of the form $x^{i}y^{n-1}$, $x^{j}y^{n-j}$ are disjoint for distinct $i$,$j$. So by the rule of sum, we add: $${\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1} = (x+y)^n$$.
+\end{proof}
+
+\begin{thm}
+$\mathbb{Z}$ is countable.
+\end{thm}
+\begin{proof}
+We construct an injection $\varphi \mathbb{Z} \rightarrow \mathbb{N}$.  Def $\varphi (n) = {2^n: n \geq 0, 3^n: n<0 }$. We show that $\varphi$ is injective. Let $n_1, n_2 \in \mathbb{Z}$ s.t. $\varphi (n_1) = \varphi(n_2)$. As 2,3 are prime they share no common factors or $n_1, n_2 <0$. Case: Suppose $n_1, n_2 \geq 0$. So $2^{n_1}=2^{n_2}$. Thus , $n_1 = n_2$. Case: Suppose $n_1, n_2 <0$. Then $3^{-n_1}=3^{-n_2}$. Thus, $-n_1 = -n_2$, and we have $n_1=n^2$. So $\varphi$ is injective, and we conclude that $\mathbb{Z}$ is countable.
+\end{proof}
+
+
+\section{Finite State Machines}
+
+\begin{define}[Finite State Machine]
+A finite state machine is a 5-state(), where:
+	\begin{enumerate}
+		\item Q is our set of states
+		\item $\Sigma$ is our input alphabet
+		\item $\delta$ is the transition function
+		\item $q_0$, the initial start state
+		\item $F \in Q$ the set of final accept states
+	\end{enumerate}
+\end{define}
+
+\begin{define}[Deterministic Finite State Automoton]
+We say that a finite state machine is a DFA(Determanistic finite state automoton) if the transition functions of the form: $$\delta: Q \times \Sigma \rightarrow Q$$
+\end{define}
+
+\begin{define}[Non-deterministic Finite State Automoton]
+A finite state machine is a NFA(Non-deterministic Finite State Automoton) if the transition function is of the form: $$\delta: Q\times \Sigma \rightarrow 2^Q$$
+\end{define}
+
+\begin{define}[$\epsilon$-NFA]
+A finite state machine is an $\epsilon$-NFA if the transition is of the form: $$\delta: Q \times (\Sigma \cup \{\epsilon\}) \rightarrow 2^Q$$
+\end{define}
+
+\begin{define}[Complete Computation]
+Let $M$ be a FSM, and let $w \in \Sigma^*$. A complete computation of $M$ on $w$ is a sequence: $s_0, s_1,...,s_k$ (where $k=|w|$), with $s_1\in \delta(s_{i-1},w_i)$, $\forall i\in [k]$, We can say that the computation is accepting if $s_k \in F$ (i.e. if $M$ holds on a final state when run on $w$).
+\end{define}
+
+\begin{define}
+Let $M$ be a FSM. The language of $M$ is the set:
+	\begin{itemize}
+		\item $L(M)=\{w\in \Sigma^*| $there exists a complete accepting computation for $w\}$
+		\item $M(w)=1$, if $M$ accepts $w$
+		\item $M(w)=0$, if $M$ rejects $w$
+	\end{itemize}
+\end{define}
+
+\begin{define}
+Let $N$ be an $\epsilon$-NFA, and let q$ \in Q$. The  E-closure of $q$, denoted ECLOSE($q$), is defined recursively: 
+	\begin{enumerate}
+		\item $q \in$  ECLOSE($q$)
+		\item If $v \in$ ECLOSE($q$) and  $r \in \delta(v,\epsilon)$, then $r\in$ ECLOSE($q$)
+	\end{enumerate}
+\end{define}
+
+\begin{thm}[Kleene Theorem]
+A language $L$ is regular if and only if there exists a DFA $M$ that accepts L(i.e. $L(M)=L$)
+\end{thm}
+\begin{proof}
+$\Rightarrow$) We prove by induction on $n=|L|$ that if $L$ is regular, then $L$ is accepted by some DFA. Base Case: 
+	\begin{enumerate}
+		\item Suppose $n=0$. Then $L=\emptyset$. The DFA $q_0$ accepts $L$.
+		\item Suppose $n=1$.	 the DFA $q_0$ accepts $\{\epsilon\}$
+		\item If $L=\{a\}$, for $a \in \epsilon$ then $q_0 \rightarrow \epsilon_1$, accepts $L$ 
+	\end{enumerate}
+Inductive Hypothesis: Fix $k \geq 1$, and suppose that every regular language of size $|L| \leq k$ is accepted by some DFA. Inductive Step: Let $L_1, L_2$ be regular languages of size at most $k$. By the Inductive Hypothesis, we have DFAs $M_1$, $M_2$ s.t. $L(M_1)=L_1$ and $L(M_2)=L_2$.
+\end{proof}
+
+\begin{lem}
+There exists a DFA $M$ to accept $L_1 \cup L_2$
+\end{lem}
+\begin{proof}
+Let $M$ be a DFA with:
+	\begin{enumerate}
+		\item $Q_M=Q_1 \times Q_2$
+		\item $\Sigma_K = \Sigma_1 \cup \Sigma_2$
+		\item $q_0(M)=(q_0(1),q_0(2))$
+		\item $(F_1 \times Q_2)\cup (Q_1 \times F_2)$
+		\item $\delta_M = \delta_1 \times \delta_2$ (i.e. $S_M((q_i,q_j),a)=S_1(q_i,a),S_2(q_j,a)$)
+	\end{enumerate} 
+We show that $L_1 \cup L_2 = L_M$. Let $\omega \in L_1\cup L_2$. Thus, $\omega \in L_1$ for some $i\in [2]$. Let $\hat{\delta}_i=(s_0,s_1,...,s_k)$ be an accepting computation of $M_i$ on $\omega$. Let $\hat{\delta}_j=(r_0,r_1,...,r_k)$ be a computation of $M_j$ on $\omega$. We have that $((s_0,r_0),(s_1,r_1),...,(s_k,r_k))$ is an accepting computation of $M$ on $\omega$. Thus $\omega \in L(M)$. So $L_1\cup L_2 \subset L(M)$. We now show $L(M)\subset L_1\cup L_2$. Let $\omega \in L(M)$. Let $\hat{\delta}_M =((a_0,b_0),(a_1,b_1),...,(a_k,b_k))$ be the accepting computation of $M$ on $\omega$ As $\omega \in L(M)$, $(a_k,b_k)\in(F_1\times Q_2)$ or $(a_k,b_k)\in (Q_1\times F_2)$. Without the laws of generality, suppose $(a_k,b_k)\in(F_1\times Q_2)$. So $(a_0,a_1,...,a_k)$ is accepting computation of $M_1 on \omega$. So $\omega_1\in L_1$. By similar argument, if instead $(a_k,b_k)\in Q_1 \times F_2$,then $\omega \in L_2$. So $\omega \in L_1\cup L_2$.
+\end{proof}
+
+\begin{lem}
+$L_1\cdot L_2$ is accepted by an $\epsilon$-NFA $M$
+\end{lem}
+
+\begin{lem}
+$L_1^*$ is regular
+\end{lem}
+
+\section{Group Theory}
+
+\begin{define}[Group]
+A group is a two-tuple $(G,*)$ where $G$ is a set and $*$ is a binary operation. Also $G$ must be closed under $GxG\rightarrow G$
+	\begin{enumerate}
+		\item Accociativity: $\forall a,b,c \in G, a(bc) = (ab)c=a*(b*c)=(a*b)*c$
+		\item Identity: $\exists e \in G$ s.t. $ea=ae=a$ $\forall a \in G$
+		\item Inverses: $\forall e \in G$, $\exists a^{-1}$ s.t. $aa_{-1}= a^{-1}a =e$
+	\end{enumerate}
+\end{define} 
+
+\begin{define}[Order of an Element]
+The order of an element for any $a \in G$, $|a| = min\{n\in \mathbb{Z}^+: a^n=e\}$
+\end{define}
+
+\begin{define}[Order of a Group]
+$|G|$ for $(G,*)$, a group, the cardinality of the set $G$.
+\end{define}
+
+\begin{define}[Subset]
+Let $G$ be a group. The set $M$ is a subgroup of $G$ of $G$ if $M\subset G$ and $H$ is a subgroup in it's own right under the same operation denoted $H \leq G$.
+\end{define}
+
+\begin{thm}
+Let (G,*) be a group. Then:
+	\begin{enumerate}
+		\item The identity, e, is unique
+		\item Inverses are unique
+		\item $(a^-{1})^{-1}= a$ $\forall a \in G$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item By def of $G$ being a group, the identity exists. BWOC, let $e,f \in G$, both the identity. Thus, $ef=f$ and $fe=e$ by def of identity. Hence, we also know $ef=fe$ so $f=ef=fe=e$. Thus the identity is unique.
+		\item By definition of $G$, $\forall a \in G$, $\exists a^{-1}$ BWOC, let $a_1^{-1}, a_1^{-2} \in G$ are both inverses for $a$. Then, $aa_1^{-1}=e$ and $aa_2^{-1}$. So, $a_1^{-1}=a_1^{-1}e=a_1^{-1}(aa_2^{-1})=(a_1^{-1}a)a_2^{-1}ea_2^-1=a_2^{-1}$.
+		\item Let a$\in G$. By definition of G, $\exists a^-1$ s.t. $aa^{-1}=e$ and $\exists(a^{-1})^{-1}$ s.t. $a^{-1}(a^{-1})^{-1}=e$.
+	\end{enumerate}
+\end{proof}
+
+
+\section{Myhill-Nerode and DFA minimization}
+
+\section{Turing Machines}
+
+\section{Planar Graphs}
+
+\section{P vs. NP}
+
+\begin{define}[P]
+$$P = \bigcup_{n\in\mathbb{N}}DTIME(n^k)$$ $=\{L|\exists \text{ Turing Machine } M \text{ and } \exists \text{ polynomial } P_M \text{ such that } \forall \omega \in \Sigma^*, M(\omega)=1 <==> w\in L, \text{ and } M \text{ takes time } p(|\omega|)\}$
+\end{define}
+
+\begin{define}[NP]
+$$NP = \{L|\exists \text{ verifier } M \text{ for } L \text{ such that } M \text{ runs in polynomial time.}\}$$
+\end{define}
+
+\begin{prop}
+$P\subset NP$
+\end{prop}
+\begin{proof}
+Let $L\in P$, and let $M$ be a poly-time decider for $L$. We construct a poly-time verifier for $L$ as follows. For $\omega \in \Sigma^*$, $M`$ on input $<\omega,0>$ simulates M on $\omega$(ignoring the certificate $O$). $M`$ accepts $<\omega, 0>$ off $M$ accepts $\omega$. Since $M$ decides $L$ in poly-time, $M`$ erifiers members of $L$ in poly-time. So $L \in NP$.
+\end{proof}
+
+\end{document}

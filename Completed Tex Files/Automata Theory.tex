@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{amsfonts}
+
+\begin{document} 
+\title{Automota Theory} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+\paragraph{Alphabet} Let $\Sigma$ be a finite set, We refer to $\Sigma$ as an alphabet.
+
+\paragraph{Kleene Closure} Let $\Sigma$ be an alphabet. The kleene closure of $\Sigma$, denoted $\Sigma^*$ is the set: $$\Sigma^* = \bigcup_{n\in \mathbb{N}}\sum^n$$ where $\Sigma^0=\{\Sigma\}$. Note: $\Sigma$ is the empty string.
+
+\paragraph{Language} A language $L \subset \Sigma^*$
+
+\paragraph{Regular Language}Let $\Sigma$ be an alphabet. The following are perciesly the regular languages over $\Sigma$. (i) $\emptyset$ is regular. (ii) $\{a\}$ is regular, $\forall a\in \Sigma$. (iii) If $L_1, L_2$ are regular the $L_1 \cup L_2$, $L_1^*$ is regular and $L_1 \cdot L_2 = \{xy|x \in L_1, y\in L_2\}$ is regular.
+
+\paragraph{}Let $\Sigma$ be an alphabet. A regular expression defined recusively 
+\begin{enumerate}
+  \item $\emptyset$ is a regular expressiion with $L(\emptyset) = \emptyset$.
+  \item $\epsilon$ is a regular with $L(\epsilon) = \{\epsilon\}$.
+  \item For each $a\in \Sigma$, the regular expression a has language $\{a\}$. ($L(a) = {a}$)
+  \item For $R_1, R_2$ be regular expressions. Then:
+    \begin{enumerate}
+      \item $R_1+R_2$ is a regular expression, where $L(R_1+R_2)=L(R_1)\cup\ L(R_2)$. 
+      \item $R_1R_2$ is a regular expression, where $L(R_1R_2) = L(R_1)L(R_2)$.
+      \item $R_1^*$ is regular, and $L(R_1^*) = (L(R_1))^*$.
+    \end{enumerate}
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document}

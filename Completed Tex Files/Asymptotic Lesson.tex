@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+\title{Asymptotics} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definition}
+\begin{definition}
+Let $$f,g: N \rightarrow L=\lim _{x\to \infty }\left(\frac{f\left(n\right)}{g\left(n\right)}\right)$$
+We have: (i) If $0 \leq L< \:\infty$, then $f(n)\in O(g(n))$ (ii) $0 < L \leq \:\infty$, then $f(n)\in\Omega(g(n))$ (iii) If $0<L< \:\infty$, then $f(n)\in\Theta(g(n))$
+\end{definition}
+
+\begin{definition}
+Let $f \circ g: \mathbb{N} \rightarrow \mathbb{N}$. We say that $ f(n) \in \mathcal{O}(g(n)) [f(n) = \mathcal{O}(g(n))]$ if $\exists c,k\in \mathbb{Z}^{+}$ such that $f(n) \leq c\circ g(n) \forall n \geq k$
+\end{definition}
+
+
+\section{Proofs}
+
+\begin{theorem}
+$f(n)=n$, $g(n) =n^2$. Then $f(n)\in O(g(n))$.
+\end{theorem}
+\begin{proof}
+Let c = k = 1. We show by induction on $n \in N$ that $n \leq n^2$. Inductive Hypothesis: Fix $k \leq 0$. Suppose $k \leq k^2$.
+Inductive Step: Consider k+1. By the Inductive Hypothesis, $k \leq k^2$. So $k+1 \leq k^2+1 > k^2 +2k+1 = (k+1)^2$ So we have by induction that $n \leq n^2$ for all $n \in N$ Thus, $n \in O(n^2)$.
+\end{proof}
+
+
+\end{document}

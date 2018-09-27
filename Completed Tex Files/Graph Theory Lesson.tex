@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage{amsfonts}
+
+\begin{document} 
+\title{Graph Theory} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+\paragraph{Simple Graph} A simple graph $G(V,E)$ has a vertex set V (denote  V(G) if the graph is not clear), and an edge set $E\subset {{V}\choose{2}}$. [$E\subset {{V}\choose{2}}$ is the set of 2-element subsets of V] Remark, for an edge ${i,h}$ we write it as $ij$ or $ji$.
+\paragraph{Compelete Graph}Let $n\in \mathbb{N}$. The complete graph on $n$ verticies, denoted as $k_n$, has vertex set $V=[n]$, and edge set $E={[n]}\choose{2}$.
+\paragraph{Path}The path on $n$ verticies, denoted $P_n$, has certe set V=[n], and edge set; $E = \{\{i, i+1\}| i \in [n-1]\}$.
+\paragraph{Null Graph}$G(V,E)$ has $V=E=\emptyset$, $G=\emptyset$.
+\paragraph{Empty Graph} The empty graph on $n$ verticies $G(V E)$ has vertex set $V=[n]$, and $E= \emptyset$.
+\paragraph{Cycle Graph} For $ n \in \mathbb{N}$, $n \geq 3$, the cycle graph on verticies, denoted as $C_n$, has vertex $E={{i, i+1}|i\in [n-1]}$.
+\paragraph{Wheel Graph}Let $n\geq 4$. The wheel graph on $n$ vertices, denoted as $W_n$ is the graph $G(V, E)$, with vertex set $V=[n]$ and edge set. $$E=\{\{i, i+1\}|i\in[n-2]\}\cup\{\{1, n-1\}\}\cup \{\{i,n\}| i\in [n-1]\}$$.
+\paragraph{Bipartite graph} A barpartite graph $G(V,E)$ is a graph s.t. $V$ can be partitoned into two sets $X, Y$ (i.e., $V=XUY$, $X\cap Y= \emptyset$ and $E\subset \{xy|x\in X, y \in  Y\})$
+\paragraph{Hypercube} The hypercube of degree $d$, denoted $Q_d$, has vertex set $V = {0,1}^d$ (i.e., the set of binary strings of length $d$). Now $(w_1, w_2, ..., w_d)$ and $(\tau_1, \tau_2,...\tau_d)$ are adjacent in $Q_d$ if and only if there exists exactly one $i \in [d]$ s.t. $w_i \neq \tau_i$.
+\paragraph{Connected} A graph is said to be connected if for every pair of vertices $u,v$ there exists a path from $u$ to $v$ (i.e., $u-v$ path). A graph is disconnected if it is not connected. The connected subgraphs are called componenets.
+\paragraph{Tree} A tree is a connected, a cyclic graph.
+\paragraph{Vertex Degree}Let $G(V, E)$ be a graph. The degree of a vertex $v \in V$ is $deg(v)= |\{uv|uv\in E\}|$. A graph is $d$-regular if every vertex has degree $d$.
+\paragraph{Walk}Let $G(V,E)$ be a graph. A walk in G is a sequence of verticies. ($v_0, v_1,...,v_k$) s.t. for all $i \in \{0,...,k-1\}$, $v_iv_{i+1} \in E(G)$.
+\paragraph{Adjacency Matrix}Let $G(V,E)$ be a graph. The adjacency matrix of $G$ is a $|V| \times |V|$ matrix where $A_{ij}$=$\{1:ij\in E(G), 0:$ Otherwise$\}$
+\paragraph{Closed Walk}Let $G(V, E)$ and let $v_0, v_1,...v_k$ be a walk. We say that the walk is closed if $v_0 = v_k$.
+\paragraph{Independent Set} An independent set of a graph $G(V,E)$ is a set $S \subset V$ such that for every $i,j \in S$, $ij \notin E(G)$. Denote $\alpha(G)$ as the size of the largest independent set in $G$.
+\paragraph{Graph Vertex Coloring} A vertex coloring of a graph $G(V, E)$ is a function $\varphi : V(G) \rightarrow [n]$ s.t. whenever $uv\in E(G), \varphi(u) \neq \varphi(v)$. The chromatic number of $G$ denoted $\chi(G)$, is the smallest $n \in \mathbb{N}$ s.t. there exists a coloring $$\varphi:V(G)\rightarrow [n]$$. 
+
+
+
+\section{Lemma (Handshake Lemma)}
+\paragraph{Proposition} Let $G(V, E)$ be a simple graph. Then $$\sum_{v\in V}deg(v) = 2|E|$$.
+\paragraph{Proof} By double counting. $2|E|$ counts twice the number of edges. $$\sum_{v\in V}deg(v)$$we note that $deg(v)$ counts the number of edges incident to $v$. Each edge has 2 endpoints, $u$ and $v$. So $uv$ is counted twice once in $deg(v)$ and once in deg(u). So  $$\sum_{v\in V}deg(v) = 2|E|$$ Q.E.D.
+
+\section{Lemma 1}
+\paragraph{Proposition} Let $G(V, E)$ be a graph. Every closed walk of odd length at least 3, contains an odd cycle.
+\paragraph{Proof}By induction on odd $k\in \mathbb{Z}^+$, $k \geq 3$. Base Case: Any closed walk of length 3 includes an odd cycle so the lemma holds. Inductive Hypothesis: Fix $k\in \mathbb{Z}^+$ odd, $k\geq 3$., and suppose the lemma holds. Inductive Step: Conside a closed walk of length $k+2$, $v_0,v_1,...,v_k+2$. If $v_0 = v_{k+2}$ are the only repeated verticies then the walk unduces an odd cycle, and we are done. Suppose instead there are only other repeated verticies in the walk. Let $0 \leq i < j \leq k+2$, where we don't have both $i=0$ and $j=k+2$. Suppose $v_i = v_j$, then $v_i,v_{i+1},...,v_k$ has odd length, then $v_i,...,v_j$ contains an odd cycle by the inductive hypothesis. Suppose instead $v_i,...,v_j$ has even length. Observe that $v_0,...,v_i,v_{j+1},...,v_k+2$ is a closed walk of odd length at most $k$. So by the Inductive Hypothesis, $v_0,...,v_i,v_j+1,...,v_{k+2}$ has an odd cycle. Thus $v_0,...,v_{k+2}$(The Original Walk) has an odd cycle. Q.E.D
+
+\section{Theorm 1}
+\paragraph{Proposition} Let $G(V,E)$ be a graph, and let $A$ be its adjcency matrix. For all $n \in \mathbb{Z}^+$, $(A^n)ij$ counts the number of $i-j$ walks of length $n$.
+\paragraph{Proof} By induction on $n \in \mathbb{Z}^+$. Base case: n=1. So $A^1 = A$. Now there exists a walk of length 1 from $i-j$ if and only if $ij \in ij \in E(G)$. This is counted by $A^{ij}$. Inductive Hypothesis: Fix $k \geq 1$, and supposse that $(A^k)ij$ counts the number of $i-j$ walks of length $k$. Inductive Step: Consider $A^{k+1}= A^K\times A$. By the Inductive Hypothesis, $(A^k)ij$ counts the number of $i-j$ walks of length $k$. Similarly Aij counts the number of $i-j$ walks of length $k$. Observe that: $$(A^{K+1})ij = \sum_{x=1}^{n= |V|}((A^k)_{ix}\times Axj)$$ Now $(A^k)ix$ counts the number of $k$-length walks from $i-x$. Now $Axj=1$ if and only if $xj\in E(G)$. So we may extend a walk of length $k$ from $i-x$, to walk of length $k+1$ from $i-j$ if and only if $xj \in E(G)$. By the rule of sum, we add up over all the $x \in V(G)$. Q.E.D.
+ 
+\section{Theorm 2}
+\paragraph{Proposition}A graph $G(V, E)$ is bipartite if and only if $G$ contains no cycles of odd length.
+\paragraph{Proof}Suppose $G$ is bipartite with parts from $X$ and $Y$. $$V(G)=X\cup Y, X\cap Y=0$$ Consider a walk of length$n$. As no two vertices in a fixed part are adjacent, only walks of even length can be closed. A cycle is a closed walk where only the endpoints are repeated. So $G$ contains no odd cycles. Conversely, suppose $G$ has no odd cycles. We construct a bipartition of $G$. Without laws of generality, suppose $G$ is connected. For if G is not connected we apply the following construction to each connected component. Fix $v \in V(G)$. Let: $X = \{x\in v(G)|dist(v,x)$ is even\}, $Y = \{y \in V(G)|dist(v,y)$ is odd\}. So $V(G)=X \cup Y$, and $X \cap Y= \emptyset$. We show that as two verticies in the same part are adjacent. Suppose to the contrary that there exists a closed odd walk $(v_1,...y_1,y_2,...v)$ By Lemma 1, $(v _1,...,y_1,y_2,...v)$ contains an odd cycle, contradicting the assumption that $G$ has no odd cycles .Similarly, no two vertices in $X$ are adjacent. So $G$ is bipartite. Q.E.D.
+
+\section{Theorm 3}
+\paragraph{Proposition} $2^\mathbb{N}$ is uncountable.
+\paragraph{Proof} Suppose to the contrary that $2^\mathbb{N}$ is countable. Let $h: \mathbb{N} \rightarrow 2^\mathbb{N}$ be a bijection. We obtain a contradiction (contradicting the surjectivity of $h$). We construct a set: $S \in 2^\mathbb{N}$ s.t. $\forall n\in \mathbb{N}$, $h(n)+S$. Def: $S=\{i \in \mathbb{N} | i \notin h(i)\}$. We show that $S$ is not in the range of $h$. Suppose $i \in h(i)$. Then $i\notin S$ Thus, $h(i)\neq S$. Similarly, if $i \notin h(i)$, then $i\in S$. So $h(i)\neq S$. Thus, $S$ ins not in the range of $h$, contridicting the assumption that $h$ was a bijection. Q.E.D.
+
+\section{Corralary to Theorm 3}
+\paragraph{Proposition}$\mathbb{R}$ is uncountable.
+\paragraph{Proof} We show $[0,1]$ is uncountable. We represent $S\in 2^\mathbb{N}$ as a binary string $w$, where $w_i = \{1: i\in S, 0: i \notin S\}$ we map $w\mapsto 0$. w, which is an injection. So $[0,1]$ is uncountable. Q.E.D.
+
+
+\end{document}

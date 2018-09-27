@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Myhill-Nerode and DFA-Minimization} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+
+\begin{definition}
+Let $L$ be a language over $\Sigma$.We say that $x,y \in \Sigma^*$ are distinguishable with relation to $L$, $\exists z \in \Sigma^*$ s.t. $xz \in L$ and $yz \notin L$ (or vice-versa)
+\end{definition}
+
+\begin{definition}Distinguishable Set of Strings]
+A set of strings $\{x,...,x_k\}$ is a distinguishable set of strings if forall distinct $i,j \in [x]$, $x_i$ and $x_j$ are distinguishable.
+\end{definition}
+
+\section{Proofs}
+
+\begin{lemma}
+Let $L$ be a regular language, and let $M$ be a $DFA$ such that $L(M)=L$. Let $x,y \in \Sigma^*$ be dustunguishable with relation to $L$. Then $M(x)$ and $M(y)$ halt on different states.
+\end{lemma}
+\begin{proof}
+Suppose to the contrary that $M(x)$ and $M(y)$ halts on the same state $q_i$. Let $z \in \Sigma^*$ such that without laws of generality $xz \in L$ and $yz \notin L$. Observe that $M(xz)$ and $M(yz)$ transition $M$ from $q_0$ to $q_1$ first. Then on string $z$, $M$ transitions from $q_1$ to same state $q_j$.As $xz \in L$, $q_j \in F$. But the $M$ accepts $yz \notin L$ by assumption. This contridicts the assumption that $z$ distinguishes $x,y$.
+\end{proof}
+
+\begin{lemma}
+Suppose $L$ is a lannguage with a set of $k$ distinguishable strings. Then any DFA accepting $L$ requires atleast $k$ states. 
+\end{lemma}
+\begin{proof}
+If $L$ is not regular, then for any DFA accepting $L$, $D(x_i)$ and $D(x_j)$ halt different states whenever $i \neq j$. So $|Q(D)|\geq k$.
+\end{proof}
+
+\begin{theorem}
+The DFA M constructed bt the Myhill-Nerode Theorem is minimum and unique to relableing.
+\end{theorem}
+\begin{proof}
+We first show that $M$ is minimum. Let $D$ be another DFA accepting $L$. Let $q \in Q(D)$ Define: $$S_q = \{w\in D(w) halts on q\}$$ Also DFA halts on seperate states when run on distinguishable strings, $S_q \subset[x]_l$ (where $[x]_l$ is an equivelence class under $\equiv_L$). Thus, $|Q(M)| \leq |Q(D)|$ So M is minimum We now show that M is unique. Suppose that $|Q(D) = |Q(M)|$, but for some strings $x,y, x \equiv_dy$, but $x \not \equiv_my$.
+\end{proof}
+\end{document}

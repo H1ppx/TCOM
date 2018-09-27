@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Combinatorics} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+
+\begin{definition}[Rule of Sum]
+\label {ruleOfSum}
+If $A$ and $B$ are disjoint sets, then $|A \cup B| = |A| +|B|$.
+\end{definition}
+
+\begin{definition}[Rule of Product]
+\label {ruleOfProduct}
+If $A$ and $B$ are sets, then $|A\ B|=|A| \cdot |B|$
+\end{definition}
+
+\begin{definition}[Permutation]
+\label {permutation}
+Let $X$ be a set. A permutation is a bijection $f: x \rightarrow x$.
+\end{definition}
+
+\begin{definition}[Restricted Permutation]
+\label {restrictedPermutation}
+Given an $n$-element set and $r \in {0,...,n}$, there are $P(n,r)= \frac{n!}{n!(n-r)!}$
+\end{definition}
+
+\begin{definition}[$\Sigma$ alphabet]
+\label {sigmaAlphabet}
+Let $\Sigma$ be a finite string we refer to as an alphabet. A word of length $n$ is an element of $\Sigma ^n$
+\end{definition}
+
+\begin{definition}[Countabliity]
+\label {countability}
+A set $X$ is said to be countable if there exists an injection $f: X \rightarrow \mathbb{N}$. That is, $X$ is countable if and only if $|X| \leq |\mathbb{N}|$.
+\end{definition}
+
+\begin{definition}[Multiset]
+\label {multiset}
+A multiset $S$ is an unordered collection of elements, which may be distinct.
+\end{definition}
+
+\begin{definition}[Intuition]
+\label {intuition}
+A multiset is a set, with possible repeated elemtents.
+\end{definition}
+
+\begin{definition}[Binomial Theorm]
+\label {binomialTheorem}
+For $x,y \in \mathbb{C}$, $$(x+y)^n = {\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1}$$
+\end{definition}
+
+\section{Proofs}
+
+\begin{theorem}
+There exists $n!$ permutations on $[n]$.
+\end{theorem}
+\begin{proof}We define a permutation $\pi: [n] \rightarrow [n]$. Observe that $\pi(1)$ can take on any value [n]. So we have $n$ choices for $\pi(1)$. This leaves $n-1$ possible values to which $\pi(2)$ can map. The selections of $\pi(1) and \pi(2)$ are independednt. so by the rule of product, we multiply to obtain $n(n-1)$ ways of selecting $\pi (1)$ and $\pi(2)$. Proceeding in this manner, there are $n(n-1)(n-2)...2 \cdot 1 = n!$ permutations. Q.E.D.
+\end{proof}
+
+\begin{theorem}
+$$\sum_{i=0}^{n} 2^{i} = 3^n$$
+\end{theorem}
+\begin{proof}
+By double countiing, $3n^2$ counts the number of ternary strings of length $n$. Fix $i \in[n]\cup{0}$. We first count the number of ternary string of length $n$ with exactly $i$ binary digits. We select the positions for the binary digits in ${n}\choose{i}$ ways. There are $2^i$ ways of populating the selected $i$ positions with binary digits. Our selection of binary digits fixes the rest of the positions to contain $2$'s Denote $A$, as the set of ternary strings length $n$ with exactly $i$ binary digits. For $ \neq j, A_i \cap A_j = \emptyset$. So by rule of sum, we add $$\sum_{i=0}^{n} 2^{i}$$ This counts all the ternary strings of length $n$.
+\end{proof}
+
+\begin{theorem}[Rule of Sum]
+Let $A$ and $B$ be disjoint sets, then $|A \cup B|=|A|+|B|$.
+\end{theorem}
+\begin{proof}
+Let $n=|A|+|B|$. We map $F: A \cup B \rightarrow [n]$. Let $g: A \rightarrow [|A|]$, $h:B \rightarrow [|B|]$ be bijections. Define: $f(x)={g(x): x \in A, h(x)+|A|:x\in B}$. As $A \cap B=0$, x will be evaluated under $g$ or under $k$, but not both, As $g$ and $h$ are functions so is $f$. We verify that $f$ is a bijection. Injection: Let $x_1$,$x_2$, $\in X\cup Y$ s.t. $f(x_1)=f(x_2)$. Observe that f takes on values from ${1,...|A|}$ if $x \in A$, and f takes on values from ${|A|+1,...,|A|+|B|}$ if $x \in Y$. if $x \in B$. Since f($x_1$)=f($x_2$), we have that $x_1$,$X_2 \in A$ or $x_1$,$x^2 \in B$. If $x_1$, $x_2 \in B$. If $x_1, x_2, \in A$, then $f(x_1)=g(x_1)=f(x_2)$. As g is a bijection, it follows that $x_1=x_2$ Similarly, if $x_1$, $x_2 \in B$, then we have: $f(x_1)=h(x_1)=h(x_2)$. As h is a bijection, $x_1= x_2$ So f is an injection. Surjection: As $g$ is a surjection, $\forall n \in [|A|], \exists x \in A$ s.t. $g(x)=n$. Therefore $[|A|]\subset range(f)$. As $h$ is a surjection, $f$ maps to each $y \in {|A|+1,...,|A|+|B|}$ So F is surjective.
+\end{proof}
+
+\begin{theorem}[Stars and Bars]
+Let $n,k\in \mathbb{N}$. There exists percisely ${n+k-1 \choose n}$ multisets of size n, whose elements are drawn from [k].
+\end{theorem}
+\begin{proof}
+Let M be the set of n-element multisets drawn from [k]. We construct a bijection $\varphi:(*^n,i^k-1) \rightarrow M$, as follows $\varphi (*^a1|...|*^ak) = {1,...,1,2,...,2,...,k,...,k}$. We show that $\varphi$ is a bijection. 
+Surjection: Let $S = {1,...,1,...,k,...k^ak} \in M$. Then $*^a1|*a2|...|*^ak| \rightarrow$ S under $\varphi$ So $\varphi$ is surjective. Injection: Let $\omega, \tau \in R(*^n,|^k-1)$ such that $\varphi(\omega) =  \varphi(\tau)= {1^a,2^{a_{1}},...,k^{a_{k}}}$. It follows that $\omega = \tau = *^{a_{1}}|*^{a_{2}}|*^{a_{3}}$. So $\varphi$ is injective, and thus a bijection.
+\end{proof}
+
+\begin{theorem}[Bionomial Theorem]
+For $x,y \in \mathbb{C}$, $$(x+y)^n = {\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1}$$\end{theorem}
+\begin{proof}
+We observe that on $${\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1}$$ There are ${n}\choose{i}$
+terms of the form $x^{i}y^{n-1} \forall i \in [n]\cup {0}$. Now expanding $(x+y)^n$, each term is of the form $x^{i}y^{n-1}$ for $i \in [n]\cup {0}$. Each factor $(x+y)$ contributes either $x$ or $y$, but not both to $x^{i}y{n-1}$. As multiplication continues the order in which the $x$'s and $y$'s are selected does not matter. There are ${n}\choose{i}$ ways of selecting the $x$ terms, which fixes the selection of the y terms. The selections of terms of the form $x^{i}y^{n-1}$, $x^{j}y^{n-j}$ are disjoint for distinct $i$,$j$. So by the rule of sum, we add: $${\sum_{n=1}^{\infty}}{{n}\choose{i}}x^{i}y^{n-1} = (x+y)^n$$.
+\end{proof}
+
+\begin{theorem}
+$\mathbb{Z}$ is countable.
+\end{theorem}
+\begin{proof}
+We construct an injection $\varphi \mathbb{Z} \rightarrow \mathbb{N}$.  Def $\varphi (n) = {2^n: n \geq 0, 3^n: n<0 }$. We show that $\varphi$ is injective. Let $n_1, n_2 \in \mathbb{Z}$ s.t. $\varphi (n_1) = \varphi(n_2)$. As 2,3 are prime they share no common factors or $n_1, n_2 <0$. Case: Suppose $n_1, n_2 \geq 0$. So $2^{n_1}=2^{n_2}$. Thus , $n_1 = n_2$. Case: Suppose $n_1, n_2 <0$. Then $3^{-n_1}=3^{-n_2}$. Thus, $-n_1 = -n_2$, and we have $n_1=n^2$. So $\varphi$ is injective, and we conclude that $\mathbb{Z}$ is countable. Q.E.D.
+\end{proof}
+
+\end{document}

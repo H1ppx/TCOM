@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\renewcommand\qedsymbol{QED}
+
+\begin{document} 
+
+\title{Planar Graphs} 
+\author{William Chu} 
+\maketitle 
+
+\section{Definitions}
+
+\begin{definition}[Deterministic Turing Machine]
+A graph $G(V, E)$ is  said to be planar, if there exists an injection $\varphi: V(G)\rightarrow\mathbb{R}$, s.t. if $uv, xy \in E(G)$, then the simple curves $[\varphi(u), \varphi(v)]$ and $[\varphi(x), \varphi(y)]$ do not intersect, except possibly at the endpoints (and only if two endpoints are the same)
+\end{definition}
+
+\section{Proofs}
+
+\begin{theorem}
+Let G(V,E) be a simple, connected, planar graph, with $n = |V|$, $m = |E|$ and $F$ faces. Then: $n-m+f = 2$.
+\end{theorem}
+\begin{proof}
+By induction on $m \in \mathbb{N}$, the number of edges. Base Case: Suppose $m=0$. As $G$ is connected $G \cong K_1$. So $n = 1$ and $f = 1$. So $n-m+f=1-0+1=2$. Inductive Hypothesis: Fix $m \leq 0$, and suppose that every plane connected graph on at most $m$ edges satisfies $n-m+f =2$. Inductive Step: Consider a connected, planar graph on $m+1$ edges.
+\begin{itemize}
+\item Case 1: Suppose $G$ has a vertex of degree 1, $V$. Observe that $G`$ has $n-1$ vertices and $m-1$ edges, By the inductive hypothesis, $G`$ satisfies $(n-1)-(m-1)+f=2$. Thus, G satisfies: $n-m+f=2$.
+\item Case 2: Suppose all vertices have degree at least 2. Thus, G has a cycle, We remove a single edge e on the boundary of some cycle. Note that e touches 2 faces. Removing e decreases the number of faces by 1. So by the inductive hypothesis, $G/\{e\}$ satisfies: $n-(m-1)+(f-1)=2$. Thus $G$ satisfies: $n-m+f=2$.
+\end{itemize}
+\end{proof}
+
+
+\end{document}
