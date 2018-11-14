@@ -1,25 +1,145 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{enumitem}
  
 \title{Theory of Computation (Version 2)}
 \author{William Chu}
+ 
+\theoremstyle{definition}
+\newtheorem{define}{Definition}[subsection]
+\newtheorem{prop}{Proposition}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\renewcommand\qedsymbol{QED}
+\newcommand{\modulo}[1]{\ (\mathrm{mod}\ #1)}
+
  
 \begin{document}
  
 \maketitle
  
 \tableofcontents
- 
-\section{Mathematical Preliminaries}
- 
-\subsection{Set Theory} 
-TODO
 
-\subsection{Functions}
-TODO
+\section{Mathematical Preliminaries}
+\subsection{Set Theory} 
+\begin{define}[Set]
+A set is a collection of distinct elements, where the order in which the elements are listed does not matter. The size of a set $S$, denoted $|S|$, is known as its cardinality or order. The members of a set are referred to as its elements. We denote membership of $x$ in $S$ as $x \in S$. Similarly if $x$ is not in $S$, we denote $x \notin S$.
+\end{define}
+
+\begin{define}[Set Union]
+Let $A$, $B$ be sets, Then the union of $A$ and $B$, denoted $A\cup B$ is the set: $$A\cup B: = \{x: x\in A \text{ or } x \in B\}$$
+\end{define}
+
+\begin{define}[Set Intersection]
+Let $A$, $B$ be sets. Then the intersection of $A$ and $B$, denoted $A\cap B$ us the set: $$A \cap B: = \{x: x\in A\text{ or }x \in B\}$$
+\end{define}
+
+\begin{define}[Symetric Difference]
+Let $A$, $B$ be sets. Then the symetric difference of $A$ and $B$ , denoted $A\Delta B$is the set: $$A\Delta B := \{x:x\in A\cup B\text{, but }x\notin A\cap B\}$$
+\end{define}
+
+\begin{define}[Set Complementation]
+Let $A$ be a set contained in our universe $U$. The complement of $A$, denoted $A^{C}$ or $\overline{A}$: $$ \overline{A}:= \{x\in U :x\notin A\}$$
+\end{define}
+
+\begin{define}[Set Difference]
+Let $A$, $B$ be sets contained in our universe $U$. The difference of $A$ and $B$, denoted $A\backslash B$ or $A-B$ is the set: $$A\backslash B:=\{x:x\in A\text{ and }x\notin B\}$$
+\end{define}
+
+\begin{define}[Cartersian Product]
+Let $A$, $B$ be sets. The cartesian product of $A$ and $B$, denoted $A\times B$, is the set: $$A\times B:=\{(a,b):a\in A\text{, }b\in B\}$$
+\end{define}
+
+\begin{define}[Subset]
+Let $A$, $B$ be sets. $A$ is said to be a subset of $B$ if for every $x\in A$, we have $x\in B$ as well. This is denoted $A\subset B$ (equivocally, $A\subseteq B$). Note that $B$ is a superset of $A$.
+\end{define}
+
+\begin{define}[Power Set]
+Let $S$ be a set. The power set of $S$, denoted $2^{S}$, or $\mathcal{P}(S)$, is the set of all subsets of $S$. Formally: $$2^{S}:=\{A:A\subset S\}$$
+\end{define}
+
+\begin{define}[Set equality]
+Let $A$, $B$ be sets. $A$=$B$ if $A\subset B$ and $B \subset A$
+\end{define}
+
+\begin{prop}
+Let $A = \{6n: n\in \mathbb{Z}\}$, $B=\{2n: n\in \mathbb{Z}\}$, $C=\{3n: n\in \mathbb{Z}\}$. So $A= B\cap C$.
+\end{prop}
+\begin{proof}
+We first show that $A \subset B\cap C$. Let $x \in A$. By definition of $A$, $x =6k$ for some $k \in \mathbb{Z}$. We show $x \in B$ and $x \in C$. We first observe $x = 2\cdot(3k)$. Therefore, $x \in B$. Now observe$ x = 3\cdot(2k)$. So $x \in C$. Thus $x \in B\cap C$. As $x$ was arbitrairy, we conclude that $A \in B\cap C$. We now show that $(B\cap C)\subset A$. Let $y \in B\cap C$. Let $n_1, n_2 \in \mathbb{Z}$ such that $y=2n_1 = 3n_2$. As 2 and 3 share no common factors, we have that $2\cdot 3|y$. so $6|y$. Thus $y = 6h$ for some $h \in \mathbb{Z}$. So $y \in A$. Thus, $(B\cap C) \subset A$. We showed that $A \subset (B\cap C)$ and $(B\cap C)\subset A$. We conclude that $A= B\cap C$ by the definition of set equality.
+\end{proof}
+
+\begin{prop}
+Let $A, B, C$ be sets, then $A\times (B\cup C) = (A\times B)\cup (A\times C)$. 
+\end{prop}
+\begin{proof}
+We first show $A\times (B\cup C) \subset (A\times B) \cup (A\times C)$. Let $(x,y) \in A \times (B\cup C)$. We show that $(x,y)\in (A\times B)\cup (A\times C)$. Suppose $y\in B$. Then $(x,y)\in A\times B$. Otherwise, $y\in C$. Then $(x,y)\in A\times C$. So $(x,y) \in (A\times B)$ or $(x,y)\in A\times C$. Thus, $(x,y)\in (A\times B) \cup (A\times C)$. We conclude that $A\times (B\cup C)\subset (A\times B)\cup (A\times C)$. We now show $(A\times B)\cup (A\times C) \subset A \times(B\cup C)$. Let $(x,y)\in (A \times B)\cup (A\times C)$. We show that $(x,y) \in A\times(B\cup C)$. Suppose $(x,y)\in A \times B$. So $x \in A$ and $y \in B$. Thus, $(x,y)\in A \times (B\cup C)$. Otherwise, $(x,y)\in A\times C$. So $x \in A$ and $y \in C$. So $y \in B\cup C/ Thus, (x,y)\in A\times(B\cup C)$. Since in both cases, $(x,y)\in A\times(B \cup C)$, we conclude that $(A\times B)\cup(A\times C)\subset A\times (B\cup C)$. Since $A \subset (B\cap C)$ and $(B\cap C)\subset A$ and $(A\times B)\cup(A\times C)\subset A\times (B\cup C)$, $A\times (B\cup C) = (A\times B)\cup (A\times C)$.
+\end{proof}
 
 \subsection{Relations}
-TODO
+TODO: FINISH
+
+\begin{define}[Relation] 
+Let $X$ be a set. A $k$-ary relation on $X$ is a subset $R \subset X^k$.
+\end{define}
+
+\begin{define}[Function]
+Let $X$ and $Y$ be sets. A function $f$ is a subset (or 1-place relation) of $X \times Y$ such that for every $x \in X$, $\exists! y \in Y$ where $(x,y) \in f$.
+\end{define}
+
+\begin{define}[Injection] 
+A function $f : X \to Y$ is said to be an injection if $f(x_1) = f(x_2) \Rightarrow x_1 = x_2$. Equivocally, $f$ is an injection if $x_1 \neq x_2 \Rightarrow f(x_1) \neq f(x_2)$.
+\end{define}
+
+\begin{define}[Surjection]
+ Let $X$ and $Y$ be sets. A function $f : X \rightarrow Y$ is a surjection if $\forall y \in Y$, $\exists x \in X$ s.t. $f(x) = y$.
+\end{define}
+
+\begin{define}[Bijection]
+Let $X$ and $Y$ be sets. A bijection is a function$ f : X \rightarrow Y$ that is both an injection and a surjection.
+\end{define}
+
+\begin{define}[Reflexive Relation]
+A relation $R$ on the set $X$ is said to be reflexive if $(a, a) \in R$ for every $a \in X$.
+\end{define}
+
+\begin{define}[Symmetric Relation]
+A relation $R$ on the set $X$ is said to be symmetric if $(a, b) \in R$ if and only if $(b,a) \in R$ for every $a,b \in X$.
+\end{define}
+
+\begin{define}[Transitive Relation]
+A relation $R$ on the set $X$ is said to be transitive if for every $a, b, c \in X$ satisfying $(a, b), (b, c) \in R,$ then $(a, c) \in R$.
+\end{define}
+
+\begin{define}[Equivalence Relation]
+An equivalence relation is a reflexive, symmetric, and transitive relation.
+\end{define}
+
+\begin{define}[Congruence Relation]
+Let $n \leq 1$ be an integer. The congruence relation modulo $n$ is a binary relation on $\mathbb{Z}$ given by: $a \equiv b (\text{mod }n)$ (read as: a is congruent to b modulo n) if and only if $n|(b-a)$.
+\end{define}
+
+\begin{prop}
+The congruence relation modulo $n$ is an equivelence relation.
+\end{prop}
+\begin{proof}
+We show that the congruence relation modulo n is reflexive, symmetric, and transitive.
+\begin{itemize}[align=left]
+\item[Reflexivity:] We show that $\forall a \in \mathbb{Z}$, $a \equiv a \modulo{n}$. Observe that $a-a=0$. So $n\times 0 = 0 = a-a$. Thus $n|a-a$. So $a \equiv a \modulo{n}$. We conclude that the congruence relation modulo $n$ is reflexive.
+
+\item[Symmetry:] We show that $b \equiv a \modulo{n}$. Let $q \in \mathbb{Z}$ such that $nq = a-b$. Thus, $n(-q) = b-a$, so $n|(b-a)$. Thus, $b \equiv a \modulo{n}$. So the congruence relation modulo $n$ is symmetric.
+
+\item[Transitive:] Let $a,b,c \in \mathbb{Z}$ s.t. $a \equiv b \modulo{n}$ and $b \equiv c \modulo{n}$. We show that $a \equiv c \modulo{n}$. By the definition of the congruence relation, $n|(a-b)$ and $n|(b-c)$. Let $h, k \in \mathbb{Z}$ s.t. $nh=a-b$ and $nk=b-c$. So $nh+nk=n(h+k)=a-c$. Thus, $n|(a-c)$, so $a\equiv c \modulo{n}$. It follows that the congruence relation modulo $n$ is transitive.
+\end{itemize}
+We conclude that the congruence relation modulo n is an equivalence relation.
+\end{proof}
+
+
 
 \subsection{Induction}
 TODO
@@ -78,10 +198,10 @@ TODO
 
 \section{Complexity Theory}
 
-\subsection{P and NP}
+\subsection{$\mathcal{P}$ and $\mathcal{NP}$}
 TODO
 
-\subsection{NP-Completeness}
+\subsection{$\mathcal{NP}$-Completeness}
 TODO
 
 \end{document}
